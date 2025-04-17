@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ALogs</title>
+  <!-- Highlight.js тема Atom One Dark для IDE‑подобного вида -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"/>
+  <script>
+    // Устанавливаем тему до загрузки стилей, чтобы избежать "вспышки"
+    (function() {
+      try {
+        var savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } catch(e) {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    })();
+  </script>
+  <style>
+    :root {
+      --primary-1: #f97419;
+      --primary-2: #fc8d3a;
+      --primary-3: #fdba72;
+      --bg-color: #ffffff;
+      --text-color: #2d2d2d;
+      --card-bg: #f8f9fa;
+      --border-color: #e0e0e0;
+      --gradient: linear-gradient(135deg, var(--primary-1) 0%, var(--primary-2) 50%, var(--primary-3) 100%);
+    }
+    [data-theme="dark"] {
+      --bg-color: #1a1a1a;
+      --text-color: #f0f0f0;
+      --card-bg: #2d2d2d;
+      --border-color: #404040;
+      --primary-1: #e56712;
+      --primary-2: #fc7d28;
+      --primary-3: #fd9f4d;
+    }
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: .3s;
+      min-height: 100vh;
+    }
+    .btn-primary {
+      background: var(--gradient);
+      border: none;
+      transition: .3s;
+      color: #2d2d2d; /* Черный текст на светлой теме */
+    }
+    [data-theme="dark"] .btn-primary {
+      color: #fff; /* Белый текст на темной теме */
+    }
+    .btn-primary:hover {
+      opacity: .9;
+      box-shadow: 0 4px 15px rgba(249,116,25,.3);
+      color: #2d2d2d;
+    }
+    [data-theme="dark"] .btn-primary:hover {
+      color: #fff;
+    }
+    .btn-outline-primary {
+      border-color: var(--primary-2);
+      color: var(--primary-2);
+    }
+    .btn-outline-primary:hover {
+      background: var(--primary-3);
+      color: var(--bg-color);
+    }
+    .theme-switcher {
+      background: var(--gradient);
+      width:50px; height:50px;
+      border-radius:50%;
+      box-shadow:0 4px 15px rgba(0,0,0,.2);
+      position:fixed; bottom:20px; right:20px;
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+      outline: none;
+      border: none; /* Убираем обводку */
+    }
+    .theme-switcher:focus {
+      outline: none;
+      /* Убираем box-shadow при фокусе, чтобы не было дополнительной обводки */
+      box-shadow: 0 4px 15px rgba(0,0,0,.2);
+    }
+    .theme-icon { transition:transform .3s; }
+    .theme-icon {
+      transition: transform .3s;
+      display: inline-block;
+      transform: rotate(180deg); /* Повернуто по умолчанию */
+    }
+    .theme-icon.rotated {
+      transform: rotate(0deg); /* В исходное положение при тёмной теме */
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.08);
+      color: var(--text-color); /* Текст тоже подстраивается под тему */
+      transition: background .3s, color .3s;
+    }
+    .card-body {
+      background: transparent !important;
+      color: var(--text-color) !important;
+      transition: background .3s, color .3s;
+    }
+    .format-selector {
+      background: var(--card-bg);
+      color: var(--text-color);
+      border:1px solid var(--border-color);
+      border-radius:6px;
+      padding:8px 12px;
+    }
+    /* Стилизация input[type=file] для тёмной темы */
+    [data-theme="dark"] input[type="file"].form-control {
+      background: var(--card-bg);
+      color: #fff; /* Белый текст для видимости */
+      border: 1px solid var(--border-color);
+    }
+    [data-theme="dark"] input[type="file"].form-control::file-selector-button {
+      background: var(--primary-2);
+      color: var(--bg-color);
+      border: none;
+      border-radius: 4px;
+      padding: 0.25em 1em;
+      transition: background .2s;
+    }
+    [data-theme="dark"] input[type="file"].form-control::file-selector-button:hover {
+      background: var(--primary-3);
+      color: var(--bg-color);
+    }
+    input[type="file"].form-control {
+      background: var(--card-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      transition: background .3s, color .3s;
+    }
+    input[type="file"].form-control::file-selector-button {
+      background: var(--primary-2);
+      color: #2d2d2d; /* Черный текст на светлой теме */
+      border: none;
+      border-radius: 4px;
+      padding: 0.25em 1em;
+      transition: background .2s, color .2s;
+    }
+    input[type="file"].form-control::file-selector-button:hover {
+      background: var(--primary-3);
+      color: #2d2d2d;
+    }
+    [data-theme="dark"] input[type="file"].form-control::file-selector-button {
+      color: #fff;
+    }
+    [data-theme="dark"] input[type="file"].form-control::file-selector-button:hover {
+      color: #fff;
+    }
+    [data-theme="dark"] input[type="file"].form-control {
+      background: #232323;
+      color: #fff;
+      border: 1px solid var(--border-color);
+    }
+    [data-theme="dark"] input[type="file"].form-control::file-selector-button {
+      background: var(--primary-2);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 0.25em 1em;
+      transition: background .2s, color .2s;
+    }
+    [data-theme="dark"] input[type="file"].form-control::file-selector-button:hover {
+      background: var(--primary-3);
+      color: #fff;
+    }
+    .upload-notice { margin-top:.5rem; font-size:.9em; }
+    .upload-notice.error { color:red; }
+    .upload-notice.warning { color:#ff6b27; }
+    .hljs-logerror { color:red; font-weight:bold; }
+    .hljs-logwarning { color:#ff6b27; font-weight:bold; }
+    #logContent {
+      max-height:50vh;
+      overflow-y:auto;
+      white-space:pre-wrap;
+      background:var(--card-bg);
+      padding:1rem;
+      border-radius:4px;
+      font-size:.9em;
+    }
+    h2,h3,h4 { color:var(--primary-2); font-weight:600; }
+    .log-list {
+      max-height:60vh; overflow-y:auto; padding-right:8px;
+    }
+    .log-list::-webkit-scrollbar { width:6px; }
+    .log-list::-webkit-scrollbar-thumb {
+      background:var(--primary-2); border-radius:4px;
+    }
+    @media(max-width:768px){ .container{padding:0 15px} h2{font-size:1.5rem} }
+  </style>
+</head>
+<body data-theme="light">
+  <div class="container py-4">
+    <div class="text-center mb-4">
+      <!-- Лого сайта, замените src на свой путь к картинке -->
+      <img id="siteLogo" src="" alt="ALogs Logo" style="max-height:64px; display:none;">
+    </div>
+    <div id="uploadSection">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>ALogs</h2>
+        <button class="btn btn-outline-primary" onclick="showList()">View Logs</button>
+      </div>
+      <div class="mb-3">
+        <input type="file" id="logFile" class="form-control"
+          accept=".log,.txt,.php,.cs,.css,.sql,.md,.markdown,.mkd,.js,.jsx,.mjs,.json,.py,.rb,.rs,.sh,.bash,.zsh,.yaml,.yml,.xml,.conf,.ts,.tsx,.java,.c,.cpp,.h,.hpp,.go,.swift,.kt,.kts,.ini,.bat,.cmd,.ps1,.psm1,.toml,.properties,.env,.dockerfile,.gradle,.make,.mk,.pl,.pm,.vb,.asp,.aspx,.jsp,.vue,.scss,.sass,.less,.coffee,.dart,.erl,.ex,.exs,.groovy,.hs,.jl,.lua,.m,.matlab,.pas,.pp,.r,.scala,.sql,.tsx,.vb,.vbs,.wsf,.xhtml,.xsl,.yml,.cfg,.conf,.ini,.lst,.out,.dat,.csv,.tsv,.ts">
+      </div>
+      <button class="btn btn-primary" onclick="uploadLog()">Upload Log</button>
+      <div id="uploadNotice" class="upload-notice error"></div>
+      <div id="storageWarning" class="upload-notice warning"></div>
+      <div id="storageInfo" class="text-muted small mt-3"></div>
+    </div>
+
+    <div id="logList" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Stored Logs</h3>
+        <button class="btn btn-secondary" onclick="showUpload()">Back</button>
+      </div>
+      <div class="log-list"></div>
+    </div>
+
+    <div id="logViewer" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 id="logTitle"></h4>
+        <button class="btn btn-secondary" onclick="showList()">Back</button>
+      </div>
+      <select id="languageSelect" class="form-select format-selector mb-3" onchange="updateHighlight(this.value)">
+        <option value="autodetect">Auto Detect</option>
+        <option value="minecraft">Minecraft</option>
+        <option value="plaintext">Plain Text</option>
+        <option value="java">Java</option>
+        <option value="csharp">C#</option>
+        <option value="css">CSS</option>
+        <option value="sql">SQL</option>
+        <option value="dockerfile">Dockerfile</option>
+        <option value="markdown">Markdown</option>
+        <option value="javascript">JavaScript</option>
+        <option value="json">JSON</option>
+        <option value="python">Python</option>
+        <option value="ruby">Ruby</option>
+        <option value="rust">Rust</option>
+        <option value="shell">Shell</option>
+        <option value="yaml">YAML</option>
+        <option value="xml">XML</option>
+        <option value="nginx">Nginx</option>
+        <option value="php">PHP</option>
+        <option value="typescript">TypeScript</option>
+      </select>
+      <div class="card">
+        <div class="card-body p-2">
+          <pre id="logContent" class="m-0"></pre>
+          <div class="d-flex justify-content-between mt-2">
+            <button class="btn btn-sm btn-secondary" onclick="scrollToTop()">Scroll to Top</button>
+            <button class="btn btn-sm btn-secondary" onclick="scrollToBottom()">Scroll to Bottom</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="theme-switcher" onclick="toggleTheme()">
+    <span class="theme-icon" id="themeIcon">🌓</span>
+  </button>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/csharp.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/dockerfile.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/yaml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/xml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/nginx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/typescript.min.js"></script>
+  <script>
+    function processLogContent(content) {
+      const lines = content.split("\n");
+      const blocks = [];
+      let current = [];
+      const tsRegex = /^\[(?:\d{2}:\d{2}:\d{2}|\d{2}[A-Za-z]{3}\d{4}\s+\d{2}:\d{2}:\d{2}\.\d{3})\]/;
+      lines.forEach(line => {
+        if (tsRegex.test(line)) {
+          if (current.length) blocks.push(current);
+          current = [line];
+        } else {
+          current.push(line);
+        }
+      });
+      if (current.length) blocks.push(current);
+      return blocks.map(block => {
+        const hdr = block[0];
+        let cls = null;
+        if (hdr.includes("/ERROR]"))      cls = "hljs-logerror";
+        else if (hdr.includes("/WARN]"))  cls = "hljs-logwarning";
+        return cls
+          ? block.map(l => `<span class="${cls}">${l}</span>`).join("\n")
+          : block.join("\n");
+      }).join("\n");
+    }
+
+    const allowedExtensions = [
+      ".log", ".txt", ".php", ".cs", ".css", ".sql", ".md", ".markdown", ".mkd",
+      ".js", ".jsx", ".mjs", ".json", ".py", ".rb", ".rs", ".sh", ".bash", ".zsh",
+      ".yaml", ".yml", ".xml", ".conf", ".ts", ".tsx", ".java", ".c", ".cpp", ".h", ".hpp",
+      ".go", ".swift", ".kt", ".kts", ".ini", ".bat", ".cmd", ".ps1", ".psm1", ".toml",
+      ".properties", ".env", ".dockerfile", ".gradle", ".make", ".mk", ".pl", ".pm", ".vb",
+      ".asp", ".aspx", ".jsp", ".vue", ".scss", ".sass", ".less", ".coffee", ".dart",
+      ".erl", ".ex", ".exs", ".groovy", ".hs", ".jl", ".lua", ".m", ".matlab", ".pas",
+      ".pp", ".r", ".scala", ".sql", ".tsx", ".vb", ".vbs", ".wsf", ".xhtml", ".xsl",
+      ".yml", ".cfg", ".conf", ".ini", ".lst", ".out", ".dat", ".csv", ".tsv", ".ts"
+    ];
+    let logs = JSON.parse(localStorage.getItem('logs')||'[]');
+    const MAX_STORAGE = 5, RETENTION_DAYS = 1;
+    let currentLogId = null;
+
+    function setThemeIconRotation(theme) {
+      const icon = document.getElementById('themeIcon');
+      if (theme === 'dark') {
+        icon.classList.add('rotated');
+      } else {
+        icon.classList.remove('rotated');
+      }
+    }
+
+    setThemeIconRotation(document.documentElement.getAttribute('data-theme'));
+
+    hljs.configure({
+      languages:[
+        'minecraft','java','csharp','css','sql','dockerfile','markdown',
+        'javascript','json','python','ruby','rust','shell',
+        'yaml','xml','nginx','php','typescript'
+      ]
+    });
+
+    function toggleTheme(){
+      const cur = document.documentElement.getAttribute('data-theme');
+      const nxt = cur==='light'?'dark':'light';
+      document.documentElement.setAttribute('data-theme',nxt);
+      localStorage.setItem('theme',nxt);
+      setThemeIconRotation(nxt);
+    }
+
+    function calculateTotalSize(){
+      return logs.reduce((acc,l)=>
+        acc + (l.fileSize||(l.content.length*2))
+      ,0);
+    }
+    function updateStorageDisplay(){
+      const usedBytes = calculateTotalSize();
+      let used;
+      if (usedBytes >= 1024 * 1024) {
+        used = (usedBytes / (1024 * 1024)).toFixed(2) + 'MB';
+      } else if (usedBytes >= 1024) {
+        used = (usedBytes / 1024).toFixed(2) + 'KB';
+      } else {
+        used = usedBytes + 'B';
+      }
+      document.getElementById('storageInfo').textContent=
+        `Storage: ${used} / ${MAX_STORAGE}MB • Retention: ${RETENTION_DAYS} day${RETENTION_DAYS!==1?'s':''}`;
+      document.getElementById('storageWarning').textContent=
+        parseFloat(usedBytes)/(1024*1024)>=MAX_STORAGE
+          ? "History storage is full. New logs may overwrite older entries."
+          : "";
+    }
+    function updateStorage(){
+      const now=Date.now();
+      logs=logs.filter(l=>now-l.timestamp<RETENTION_DAYS*86400000);
+      while(calculateTotalSize()>MAX_STORAGE*1024*1024) logs.shift();
+      localStorage.setItem('logs',JSON.stringify(logs));
+      updateStorageDisplay();
+    }
+
+    function uploadLog(){
+      const file=document.getElementById('logFile').files[0];
+      if(!file)return;
+      const ext=file.name.slice(file.name.lastIndexOf('.')).toLowerCase();
+      if(!allowedExtensions.includes(ext)){
+        document.getElementById('uploadNotice').textContent=
+          `File format ${ext} is not supported.`;
+        return;
+      }
+      document.getElementById('uploadNotice').textContent='';
+      const reader=new FileReader();
+      reader.onload=e=>{
+        let content=e.target.result.replace(/\r\n|\r/g,"\n");
+        const fmt=detectFormat(content);
+        logs.push({
+          id:Date.now(),
+          name:file.name,
+          content,
+          fileSize:file.size,
+          format:fmt,
+          timestamp:Date.now()
+        });
+        updateStorage();
+        showList();
+      };
+      reader.readAsText(file);
+    }
+
+    // Улучшенный autodetect с приоритетами и более строгими паттернами
+    function detectFormat(content){
+      const pats = {
+        minecraft: /(\[Server(?:\s*thread|Main).*?\/(?:INFO|WARN|ERROR|DEBUG)\]|Minecraft)/,
+        dockerfile: /^\s*(FROM|RUN|COPY|EXPOSE)\b/m,
+        sql: /^\s*(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|FROM|WHERE)\b/mi,
+        yaml: /^(\s*---|[\w-]+:\s)/m,
+        json: /^\s*[\{\[][\s\S]*[\}\]]\s*$/,
+        python: /^\s*(def |import |print\(|# )/m,
+        javascript: /^\s*(function|const |let |console\.log|var )/m,
+        csharp: /^\s*(using |namespace |public class )/m,
+        java: /^\s*(package\s+|import\s+java\.|public\s+class\s+)/m,
+        rust: /^\s*(fn |let |mod |unsafe )/m,
+        shell: /^\s*(#!\/bin\/(bash|sh)|echo |export |cd |if )/m,
+        nginx: /^\s*(server\s*\{|location\s+|nginx)/mi,
+        php: /<\?php|^\s*\$[a-z_]+\s*=/mi,
+        xml: /^\s*<\?xml|<\/[a-z]+>/mi,
+        typescript: /^\s*(interface |type |const [a-z]+:|import )/m,
+        properties: /^\s*[\w\.\-]+\s*=/m,
+        ini: /^\s*\[.*\]\s*$/m,
+        markdown: /^(\s*#|\* |\d+\. )/m,
+        css: /^\s*[.#]?[\w\-]+\s*\{/m,
+        jsonl: /^\s*\{.*\}\s*$/m,
+        log: /^\[\d{2}:\d{2}:\d{2}\]/m
+      };
+      // Приоритет: minecraft > json > yaml > xml > ini > properties > остальные
+      const order = [
+        'minecraft','json','yaml','xml','ini','properties','dockerfile','sql','python','javascript','typescript','csharp','java','rust','shell','nginx','php','markdown','css','jsonl','log'
+      ];
+      for(const k of order) if(pats[k].test(content)) return k;
+      return 'autodetect';
+    }
+
+    // Своя простая подсветка для некоторых форматов (кроме minecraft)
+    function customHighlight(content, lang) {
+      if (lang === 'log') {
+        // Примитивная подсветка для обычных логов: ERROR/WARN/INFO
+        return content.replace(/(\[.*?\/ERROR])/g, '<span class="hljs-logerror">$1</span>')
+                      .replace(/(\[.*?\/WARN])/g, '<span class="hljs-logwarning">$1</span>')
+                      .replace(/(\[.*?\/INFO])/g, '<span class="hljs-loginfo">$1</span>');
+      }
+      if (lang === 'properties') {
+        // Подсветка ключ=значение
+        return content.replace(/^([\w\.\-]+)(\s*=\s*)(.*)$/gm, '<span style="color:#fc8d3a;font-weight:bold;">$1</span>$2<span style="color:#fdba72;">$3</span>');
+      }
+      if (lang === 'ini') {
+        // Подсветка секций и ключей
+        return content
+          .replace(/^\s*\[(.*?)\]\s*$/gm, '<span style="color:#fc8d3a;font-weight:bold;">[$1]</span>')
+          .replace(/^([\w\.\-]+)(\s*=\s*)(.*)$/gm, '<span style="color:#fdba72;">$1</span>$2<span style="color:#fff;">$3</span>');
+      }
+      if (lang === 'jsonl') {
+        // Подсветка для JSONL (одна строка - один JSON)
+        return content.replace(/^(\{.*\})$/gm, '<span style="color:#fc8d3a;">$1</span>');
+      }
+      // Можно добавить ещё свои форматы
+      return null;
+    }
+
+    function detectFormat(content){
+      const pats={
+        minecraft:/(\[Server(?:\s*thread|Main).*?\/(?:INFO|WARN|ERROR|DEBUG)\]|Minecraft)/,
+        dockerfile:/(FROM|RUN|COPY|EXPOSE)/,
+        sql:/(SELECT|FROM|WHERE|INSERT|UPDATE)/i,
+        yaml:/^(---|[\w-]+:\s)/m,
+        json:/^{|}$/,
+        python:/(def |import |print\(|# )/,
+        javascript:/(function|const|let|console\.log)/,
+        csharp:/(using |namespace |public class )/,
+        java:/(package\s+|import\s+java\.|public\s+class\s+)/,
+        rust:/(fn |let |mod |unsafe )/,
+        shell:/(#!\/bin\/bash|#!\/bin\/sh)/,
+        nginx:/(server {|location |nginx)/i,
+        php:/(\<\?php|\$[a-z_]+)/i,
+        xml:/\<\?xml|<\/[a-z]+>/i,
+        typescript:/(interface |type |const [a-z]+:)/
+      };
+      for(const k in pats) if(pats[k].test(content)) return k;
+      return 'autodetect';
+    }
+
+    function showLog(id){
+      currentLogId=id;
+      const log=logs.find(l=>l.id===id);
+      document.getElementById('uploadSection').classList.add('d-none');
+      document.getElementById('logList').classList.add('d-none');
+      document.getElementById('logViewer').classList.remove('d-none');
+      document.getElementById('logTitle').textContent=log.name;
+      document.getElementById('languageSelect').value=log.format;
+      updateHighlight(log.format);
+    }
+
+    function updateHighlight(lang){
+      const log=logs.find(l=>l.id===currentLogId);
+      log.format=lang;
+      localStorage.setItem('logs',JSON.stringify(logs));
+      const pre=document.getElementById('logContent');
+      if(lang==='minecraft'){
+        pre.innerHTML=processLogContent(log.content);
+      } else if(lang==='plaintext'){
+        pre.textContent=log.content;
+      } else if(lang==='autodetect'){
+        // Улучшенный autodetect
+        const detected = detectFormat(log.content);
+        if (detected === 'minecraft') {
+          pre.innerHTML = processLogContent(log.content);
+        } else {
+          const custom = customHighlight(log.content, detected);
+          if (custom) {
+            pre.innerHTML = custom;
+          } else {
+            pre.innerHTML = hljs.highlightAuto(log.content).value;
+          }
+        }
+      } else {
+        // Для своих форматов
+        const custom = customHighlight(log.content, lang);
+        if (custom) {
+          pre.innerHTML = custom;
+        } else {
+          pre.innerHTML = hljs.highlight(log.content,{language:lang}).value;
+        }
+      }
+    }
+
+    function showList(){
+      document.getElementById('uploadSection').classList.add('d-none');
+      document.getElementById('logViewer').classList.add('d-none');
+      document.getElementById('logList').classList.remove('d-none');
+      const out=document.querySelector('.log-list');
+      out.innerHTML=logs.map(l=>`
+        <div class="card mb-2"><div class="card-body py-2 d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="mb-0">${l.name}</h6>
+            <small class="text-muted">${new Date(l.timestamp).toLocaleString()} • ${formatSize(l.fileSize||(l.content.length*2))} • ${l.format}</small>
+          </div>
+          <button class="btn btn-sm btn-primary" onclick="showLog(${l.id})">View</button>
+        </div></div>`).join('');
+    }
+
+    function showUpload(){
+      document.getElementById('uploadSection').classList.remove('d-none');
+      document.getElementById('logList').classList.add('d-none');
+      document.getElementById('logViewer').classList.add('d-none');
+      document.getElementById('logFile').value='';
+    }
+
+    function scrollToTop(){
+      document.getElementById('logContent').scrollTo({top:0,behavior:'smooth'});
+    }
+    function scrollToBottom(){
+      const el=document.getElementById('logContent');
+      el.scrollTo({top:el.scrollHeight,behavior:'smooth'});
+    }
+
+    // init
+    updateStorage();
+    showUpload();
+
+    // Функция форматирования размера файла
+    function formatSize(bytes) {
+      if (bytes >= 1024 * 1024) {
+        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+      } else if (bytes >= 1024) {
+        return (bytes / 1024).toFixed(2) + ' KB';
+      } else {
+        return bytes + ' B';
+      }
+    }
+  </script>
+</body>
+</html>
