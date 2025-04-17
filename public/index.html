@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ALogs</title>
+  <link rel="stylesheet" href="styles/main.css"/>
+</head>
+<body data-theme="light">
+  <div class="container py-4">
+    <div class="text-center mb-4">
+      <img id="siteLogo" src="" alt="ALogs Logo" style="max-height:64px; display:none;">
+    </div>
+    <div id="uploadSection">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>ALogs</h2>
+        <button class="btn btn-outline-primary" onclick="showList()">View Logs</button>
+      </div>
+      <div class="mb-3">
+        <input type="file" id="logFile" class="form-control" accept=".log,.txt,.php,.cs,.css,.sql,.md,.markdown,.mkd,.js,.jsx,.mjs,.json,.py,.rb,.rs,.sh,.bash,.zsh,.yaml,.yml,.xml,.conf,.ts,.tsx,.java,.c,.cpp,.h,.hpp,.go,.swift,.kt,.kts,.ini,.bat,.cmd,.ps1,.psm1,.toml,.properties,.env,.dockerfile,.gradle,.make,.mk,.pl,.pm,.vb,.asp,.aspx,.jsp,.vue,.scss,.sass,.less,.coffee,.dart,.erl,.ex,.exs,.groovy,.hs,.jl,.lua,.m,.matlab,.pas,.pp,.r,.scala,.sql,.tsx,.vb,.vbs,.wsf,.xhtml,.xsl,.yml,.cfg,.conf,.ini,.lst,.out,.dat,.csv,.tsv,.ts">
+      </div>
+      <button class="btn btn-primary" onclick="uploadLog()">Upload Log</button>
+      <div id="uploadNotice" class="upload-notice error"></div>
+      <div id="storageWarning" class="upload-notice warning"></div>
+      <div id="storageInfo" class="text-muted small mt-3"></div>
+    </div>
+
+    <div id="logList" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>Stored Logs</h3>
+        <button class="btn btn-secondary" onclick="showUpload()">Back</button>
+      </div>
+      <div class="log-list"></div>
+    </div>
+
+    <div id="logViewer" class="d-none">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 id="logTitle"></h4>
+        <button class="btn btn-secondary" onclick="showList()">Back</button>
+      </div>
+      <select id="languageSelect" class="form-select format-selector mb-3" onchange="updateHighlight(this.value)">
+        <option value="autodetect">Auto Detect</option>
+        <option value="minecraft">Minecraft</option>
+        <option value="plaintext">Plain Text</option>
+        <option value="java">Java</option>
+        <option value="csharp">C#</option>
+        <option value="css">CSS</option>
+        <option value="sql">SQL</option>
+        <option value="dockerfile">Dockerfile</option>
+        <option value="markdown">Markdown</option>
+        <option value="javascript">JavaScript</option>
+        <option value="json">JSON</option>
+        <option value="python">Python</option>
+        <option value="ruby">Ruby</option>
+        <option value="rust">Rust</option>
+        <option value="shell">Shell</option>
+        <option value="yaml">YAML</option>
+        <option value="xml">XML</option>
+        <option value="nginx">Nginx</option>
+        <option value="php">PHP</option>
+        <option value="typescript">TypeScript</option>
+      </select>
+      <div class="card">
+        <div class="card-body p-2">
+          <pre id="logContent" class="m-0"></pre>
+          <div class="d-flex justify-content-between mt-2">
+            <button class="btn btn-sm btn-secondary" onclick="scrollToTop()">Scroll to Top</button>
+            <button class="btn btn-sm btn-secondary" onclick="scrollToBottom()">Scroll to Bottom</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="theme-switcher" onclick="toggleTheme()">
+    <span class="theme-icon" id="themeIcon">🌓</span>
+  </button>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>
