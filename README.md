@@ -1,11 +1,11 @@
-# Cloudflare Logs Viewer
+# ALogs
 
 This project is a web application for viewing and managing log files. It allows users to upload log files, view their contents, and switch between light and dark themes.
 
 ## Project Structure
 
 ```
-cloudflare-logs-viewer
+ALogs
 ├── public
 │   ├── index.html        # Main HTML structure of the application
 │   ├── styles
@@ -14,19 +14,6 @@ cloudflare-logs-viewer
 │       └── main.js       # JavaScript functionality for the application
 └── README.md             # Documentation for the project
 ```
-
-## Setup Instructions
-
-1. **Clone the repository:**
-   ```bash
-   git clone <repository-url>
-   cd cloudflare-logs-viewer
-   ```
-
-2. **Deploy to Cloudflare Pages:**
-   - Push the project to your GitHub repository.
-   - Connect your GitHub repository to Cloudflare Pages.
-   - Set the build command to `npm run build` (if applicable) and the output directory to `public`.
 
 ## Usage Guidelines
 
