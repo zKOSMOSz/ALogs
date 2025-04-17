@@ -61,9 +61,9 @@ hljs.configure({
 
 function toggleTheme(){
   const cur = document.documentElement.getAttribute('data-theme');
-  const nxt = cur==='light'?'dark':'light';
-  document.documentElement.setAttribute('data-theme',nxt);
-  localStorage.setItem('theme',nxt);
+  const nxt = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', nxt);
+  localStorage.setItem('theme', nxt);
   setThemeIconRotation(nxt);
 }
 

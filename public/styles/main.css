@@ -9,7 +9,7 @@
   --gradient: linear-gradient(135deg, var(--primary-1) 0%, var(--primary-2) 50%, var(--primary-3) 100%);
 }
 
-[data-theme="dark"] {
+:root[data-theme="dark"], [data-theme="dark"]:root {
   --bg-color: #1a1a1a;
   --text-color: #f0f0f0;
   --card-bg: #2d2d2d;
@@ -26,11 +26,26 @@ body {
   min-height: 100vh;
 }
 
+body, .container {
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+body, .container, .card, .card-body, .format-selector {
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
 .btn-primary {
   background: var(--gradient);
   border: none;
   transition: .3s;
   color: #2d2d2d;
+}
+
+.btn-primary, .btn-outline-primary, .btn-secondary {
+  background: var(--gradient) !important;
+  color: var(--text-color) !important;
+  border-color: var(--primary-2) !important;
 }
 
 [data-theme="dark"] .btn-primary {
@@ -98,10 +113,17 @@ body {
   transition: background .3s, color .3s;
 }
 
+.card, .card-body {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
 .card-body {
   background: transparent !important;
   color: var(--text-color) !important;
-  transition: background .3s, color .3s;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .format-selector {
@@ -110,6 +132,12 @@ body {
   border: 1px solid var(--border-color);
   border-radius: 6px;
   padding: 8px 12px;
+}
+
+.format-selector {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
 }
 
 .upload-notice {
@@ -163,6 +191,102 @@ h2, h3, h4 {
 .log-list::-webkit-scrollbar-thumb {
   background: var(--primary-2);
   border-radius: 4px;
+}
+
+[data-theme="dark"] .log-list::-webkit-scrollbar-thumb {
+  background: var(--primary-2);
+}
+
+[data-theme="dark"] .log-list::-webkit-scrollbar {
+  background: #222;
+}
+
+[data-theme="dark"] .log-list {
+  scrollbar-color: var(--primary-2) #222;
+  scrollbar-width: thin;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar {
+  background: #222;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--primary-2);
+  border-radius: 4px;
+}
+
+[data-theme="dark"] {
+  scrollbar-color: var(--primary-2) #222;
+  scrollbar-width: thin;
+}
+
+input[type="file"] {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  height: 48px;
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 4px;
+  padding: 0 0.5em;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  margin: 0;
+  box-sizing: border-box;
+  font-size: 1.1em;
+  line-height: 48px;
+}
+
+input[type="file"]::file-selector-button {
+  background: var(--primary-2);
+  color: var(--bg-color);
+  border: none;
+  border-radius: 4px;
+  height: 40px;                /* чуть меньше, чем у input */
+  padding: 0 1em;
+  margin: -7px 8px 0 0;         /* 3px сверху, 0 снизу */
+  min-width: 110px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  display: inline-block;
+  line-height: 30px;
+  vertical-align: middle;
+}
+
+[data-theme="dark"] input[type="file"] {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border: 1px solid var(--border-color) !important;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+[data-theme="dark"] input[type="file"]::file-selector-button {
+  background: var(--primary-2);
+  color: var(--bg-color);
+  border: none;
+  border-radius: 4px;
+  padding: 0.4em 1em;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+[data-theme="dark"] input[type="file"]::file-selector-button:hover {
+  background: var(--primary-1);
+  color: var(--bg-color);
+}
+
+input[type="file"],
+input[type="file"]::file-selector-button,
+[data-theme="dark"] input[type="file"],
+[data-theme="dark"] input[type="file"]::file-selector-button {
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.input-file-wrapper {
+  width: 100%;
+  margin-bottom: 1rem;
+  display: block;
 }
 
 @media(max-width: 768px) {
