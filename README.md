@@ -1,25 +1,12 @@
+<img src="public/images/logo.png" alt="ALogs Logo" width="100">
+
 # ALogs
 
-This project is a web application for viewing and managing log files. It allows users to upload log files, view their contents, and switch between light and dark themes.
+#### Aerolite Project
 
-## Project Structure
+---
 
-```
-ALogs
-├── public
-│   ├── index.html        # Main HTML structure of the application
-│   ├── styles
-│   │   └── main.css      # CSS styles for the application
-│   └── scripts
-│       └── main.js       # JavaScript functionality for the application
-└── README.md             # Documentation for the project
-```
-
-## Usage Guidelines
-
-- Open `public/index.html` in your web browser to access the logs viewer.
-- Use the upload button to select and upload log files.
-- Switch between light and dark themes using the theme toggle button.
+This project is a web application for viewing and managing log files. It allows users to upload log files, view their contents, and switch between light and dark themes. **This project was created using AI.**
 
 ## Contributing
 
