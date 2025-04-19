@@ -222,19 +222,14 @@ h2, h3, h4 {
 
 input[type="file"] {
   width: 100%;
-  max-width: 100%;
-  min-width: 0;
-  height: 48px;
+  height: 44px;
   background: var(--card-bg) !important;
   color: var(--text-color) !important;
   border: 1px solid var(--border-color) !important;
   border-radius: 4px;
   padding: 0 0.5em;
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-  margin: 0;
-  box-sizing: border-box;
   font-size: 1.1em;
-  line-height: 48px;
+  box-sizing: border-box;
 }
 
 input[type="file"]::file-selector-button {
@@ -242,16 +237,32 @@ input[type="file"]::file-selector-button {
   color: var(--bg-color);
   border: none;
   border-radius: 4px;
-  height: 40px;                /* чуть меньше, чем у input */
+  height: 38px;
   padding: 0 1em;
-  margin: -7px 8px 0 0;         /* 3px сверху, 0 снизу */
+  margin: 2px 8px 0 0;
   min-width: 110px;
   font-size: 1em;
   cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
   display: inline-block;
-  line-height: 30px;
-  vertical-align: middle;
+  /* уберите line-height, vertical-align, margin-top/bottom */
+}
+
+input[type="file"]::file-selector-button,
+input[type="file"]:hover::file-selector-button,
+input[type="file"]:focus::file-selector-button,
+input[type="file"]:active::file-selector-button {
+  background: var(--primary-2) !important;
+  color: var(--bg-color) !important;
+  border: none;
+}
+
+input[type="file"]::file-selector-button:hover,
+input[type="file"]:hover::file-selector-button,
+input[type="file"]:focus::file-selector-button,
+input[type="file"]:active::file-selector-button {
+  background: var(--primary-1) !important;
+  color: var(--bg-color) !important;
+  opacity: 0.95;
 }
 
 [data-theme="dark"] input[type="file"] {
@@ -283,10 +294,18 @@ input[type="file"]::file-selector-button,
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
+input[type="file"]::file-selector-button:hover,
+[data-theme="dark"] input[type="file"]::file-selector-button:hover {
+  background: var(--primary-1) !important;
+  color: var(--bg-color) !important;
+  opacity: 0.95;
+}
+
 .input-file-wrapper {
   width: 100%;
   margin-bottom: 1rem;
-  display: block;
+  display: flex;
+  align-items: center;
 }
 
 .dev-signature {
