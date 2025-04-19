@@ -55,7 +55,7 @@ hljs.configure({
   languages:[
     'minecraft','java','csharp','css','sql','dockerfile','markdown',
     'javascript','json','python','ruby','rust','shell',
-    'yaml','xml','nginx','php','typescript'
+    'yaml','xml','nginx','php','typescript','properties'
   ]
 });
 
@@ -150,7 +150,7 @@ function detectFormat(content){
     log: /^\[\d{2}:\d{2}:\d{2}\]/m
   };
   const order = [
-    'minecraft','json','yaml','xml','ini','properties','dockerfile','sql','python','javascript','typescript','csharp','java','rust','shell','nginx','php','markdown','css','jsonl','log'
+    'minecraft','json','yaml','xml','ini','properties','dockerfile','sql','python','javascript','typescript','csharp','java','rust','shell','nginx','php','markdown','css','jsonl','log','properties'
   ];
   for(const k of order) if(pats[k].test(content)) return k;
   return 'autodetect';
@@ -161,9 +161,6 @@ function customHighlight(content, lang) {
     return content.replace(/(\[.*?\/ERROR])/g, '<span class="hljs-logerror">$1</span>')
                   .replace(/(\[.*?\/WARN])/g, '<span class="hljs-logwarning">$1</span>')
                   .replace(/(\[.*?\/INFO])/g, '<span class="hljs-loginfo">$1</span>');
-  }
-  if (lang === 'properties') {
-    return content.replace(/^([\w\.\-]+)(\s*=\s*)(.*)$/gm, '<span style="color:#fc8d3a;font-weight:bold;">$1</span>$2<span style="color:#fdba72;">$3</span>');
   }
   if (lang === 'ini') {
     return content
