@@ -228,13 +228,12 @@ input[type="file"] {
   border: 1px solid var(--border-color) !important;
   border-radius: 4px;
   padding: 0 0.5em;
-  font-size: 1.1em;
+  font-size: 1em;
   box-sizing: border-box;
 }
 
 input[type="file"]::file-selector-button {
   background: var(--primary-2);
-  color: var(--bg-color);
   border: none;
   border-radius: 4px;
   height: 38px;
@@ -244,7 +243,6 @@ input[type="file"]::file-selector-button {
   font-size: 1em;
   cursor: pointer;
   display: inline-block;
-  /* уберите line-height, vertical-align, margin-top/bottom */
 }
 
 input[type="file"]::file-selector-button,
@@ -252,7 +250,6 @@ input[type="file"]:hover::file-selector-button,
 input[type="file"]:focus::file-selector-button,
 input[type="file"]:active::file-selector-button {
   background: var(--primary-2) !important;
-  color: var(--bg-color) !important;
   border: none;
 }
 
@@ -261,8 +258,25 @@ input[type="file"]:hover::file-selector-button,
 input[type="file"]:focus::file-selector-button,
 input[type="file"]:active::file-selector-button {
   background: var(--primary-1) !important;
-  color: var(--bg-color) !important;
   opacity: 0.95;
+}
+
+html[data-theme="light"] input[type="file"]::file-selector-button,
+html[data-theme="light"] input[type="file"]:hover::file-selector-button,
+html[data-theme="light"] input[type="file"]:focus::file-selector-button,
+html[data-theme="light"] input[type="file"]:active::file-selector-button {
+  color: #222 !important;
+  background: var(--primary-2) !important;
+  border: none !important;
+}
+
+html[data-theme="dark"] input[type="file"]::file-selector-button,
+html[data-theme="dark"] input[type="file"]:hover::file-selector-button,
+html[data-theme="dark"] input[type="file"]:focus::file-selector-button,
+html[data-theme="dark"] input[type="file"]:active::file-selector-button {
+  color: #fff !important;
+  background: var(--primary-2) !important;
+  border: none !important;
 }
 
 [data-theme="dark"] input[type="file"] {
@@ -287,6 +301,14 @@ input[type="file"]:active::file-selector-button {
   color: var(--bg-color);
 }
 
+[data-theme="dark"] input[type="file"]::file-selector-button:hover {
+  color: var(--bg-color) !important;
+}
+
+[data-theme="dark"] input[type="file"]::file-selector-button:hover {
+  color: var(--bg-color) !important;
+}
+
 input[type="file"],
 input[type="file"]::file-selector-button,
 [data-theme="dark"] input[type="file"],
@@ -297,7 +319,6 @@ input[type="file"]::file-selector-button,
 input[type="file"]::file-selector-button:hover,
 [data-theme="dark"] input[type="file"]::file-selector-button:hover {
   background: var(--primary-1) !important;
-  color: var(--bg-color) !important;
   opacity: 0.95;
 }
 
@@ -306,6 +327,15 @@ input[type="file"]::file-selector-button:hover,
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
+}
+
+html[data-theme="light"] input[type="file"]::file-selector-button,
+html[data-theme="light"] input[type="file"]:hover::file-selector-button,
+html[data-theme="light"] input[type="file"]:focus::file-selector-button,
+html[data-theme="light"] input[type="file"]:active::file-selector-button {
+  color: #222 !important;
+  background: var(--primary-2) !important;
+  border: none !important;
 }
 
 .dev-signature {
